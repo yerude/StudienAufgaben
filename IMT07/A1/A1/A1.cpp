@@ -1,20 +1,57 @@
-// A1.cpp : Diese Datei enthält die Funktion "main". Hier beginnt und endet die Ausführung des Programms.
-//
-
+/*##############################################
+Erweiterter Caeser Algorithmus
+##############################################*/
 #include <iostream>
+using namespace std;
 
-int main()
-{
-    std::cout << "Hello World!\n";
+// Prototyp
+void caesarCustom(string);
+
+// Override
+void caesar(string kette) {
+	int laenge, verschiebung;
+	//die Länge der ursprünglichen Zeichenkette ermitteln
+	laenge = kette.length();
+	cout << "Caesar-Verschluesselung" << endl;
+	// ASCII Bereiche von A-Z: M = {65,...,90} mit 25 Buchstaben
+	// ASCII Bereiche von a-z: M = {97,...,122} mit 25 Buchstaben
+	// Jedes Zeichen um den angegebenen Wert verschieben
+	for (int zaehler = 0; zaehler < laenge; zaehler++) {
+		int ascii = int(kette[zaehler]);
+		int offset = 1 + ascii + zaehler;
+		bool encryptWasSuccess = false;
+
+		if (ascii > 64 && ascii < 91) {
+			while (offset > 90) {
+				offset -= 26;
+			}
+			encryptWasSuccess = true;
+		}
+		if (ascii > 96 && ascii < 123) {
+			while (offset > 122) {
+				offset -= 26;
+			}
+			encryptWasSuccess = true;
+		}
+		if (!encryptWasSuccess) {
+			cout << "?";
+			cout << endl << endl;
+		}
+		cout << static_cast<char>(offset);
+	}
 }
 
-// Programm ausführen: STRG+F5 oder "Debuggen" > Menü "Ohne Debuggen starten"
-// Programm debuggen: F5 oder "Debuggen" > Menü "Debuggen starten"
-
-// Tipps für den Einstieg: 
-//   1. Verwenden Sie das Projektmappen-Explorer-Fenster zum Hinzufügen/Verwalten von Dateien.
-//   2. Verwenden Sie das Team Explorer-Fenster zum Herstellen einer Verbindung mit der Quellcodeverwaltung.
-//   3. Verwenden Sie das Ausgabefenster, um die Buildausgabe und andere Nachrichten anzuzeigen.
-//   4. Verwenden Sie das Fenster "Fehlerliste", um Fehler anzuzeigen.
-//   5. Wechseln Sie zu "Projekt" > "Neues Element hinzufügen", um neue Codedateien zu erstellen, bzw. zu "Projekt" > "Vorhandenes Element hinzufügen", um dem Projekt vorhandene Codedateien hinzuzufügen.
-//   6. Um dieses Projekt später erneut zu öffnen, wechseln Sie zu "Datei" > "Öffnen" > "Projekt", und wählen Sie die SLN-Datei aus.
+// Main
+int main(int argc, char** argv)
+{
+	string eingabe;
+	//Die ursprüngliche Zeichenkette einlesen
+	//bitte in einer Zeile eingeben
+	cout << "Bitte geben Sie eine Zeichenkette ein (ohne Leerzeichen): ";
+	cin >> eingabe;
+	//bitte in einer Zeile eingeben
+	cout << "Die urspruengliche Zeichenkette ist: " << eingabe << endl << endl;
+	//die Verschlüsselungen durchführen
+	caesar(eingabe);
+	return 0;
+}
